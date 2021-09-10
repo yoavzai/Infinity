@@ -1,0 +1,8 @@
+.vscode
+
+# windows related
+*.ini
+*.exe
+
+# linux related
+*.out
