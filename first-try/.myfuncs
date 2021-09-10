@@ -1,0 +1,11 @@
+alias gd='gcc -ansi -pedantic-errors -Wall -Wextra -g'
+alias gc='gcc -ansi -pedantic-errors -Wall -Wextra -DNDEBUG -O3'
+alias gd9='gcc -std=c99 -pedanic-errors -Wall -Wextra -g'
+alias gc9='gcc -std=c99 -pedanic-errors -Wall -Wextra -DNDEBUG -O3'
+alias gd+='g++ -std=c++98 -pedantic-errors -Wall -Wextra -g'
+alias gc+='g++ -std=c++98 -pedantic-errors -Wall -Wextra -DNDEBUG -O3'
+
+alias vlg='valgrind --leak-check=yes --track-origins=yes'
+
+alias c='{ code; exit; }'
+alias y='reboot'
