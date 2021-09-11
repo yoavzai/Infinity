@@ -4,6 +4,7 @@
 # windows related
 *.ini
 *.exe
+*.exe.stackdump
 
 # linux related
 *.out
