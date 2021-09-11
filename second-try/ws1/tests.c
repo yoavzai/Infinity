@@ -12,7 +12,7 @@ static void TestTenToThe()
     assert(TenToThe(10) == 10000000000);
     assert(TenToThe(-1) == 0.1);
     assert(TenToThe(-4) == 0.0001);
-    assert(TenToThe(-8) == 0.00000001);
+    assert(TenToThe(-3) == 0.001);
 }
 
 static void TestFlip()
