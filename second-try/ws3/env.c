@@ -5,15 +5,6 @@
 #include <ctype.h> //tolower
 
 
-size_t EnvLen(char **env) {
-    size_t len = 0;
-    while (*env != NULL)
-    {   ++len;
-        ++env;
-    }
-
-    return len;
-}
 
 void _CopyStrToLower(char *dest, char *src) {
     size_t i = 0;
@@ -24,29 +15,15 @@ void _CopyStrToLower(char *dest, char *src) {
     dest[i] = '\0';
 }
 
-void _CopyEnvToLower(char **dest, char **src, size_t len) {
-    for (size_t i = 0; i < len; ++i)
-    {
-        _CopyStrToLower(dest[i], src[i]);
+size_t EnvLen(char **env) {
+    size_t len = 0;
+    while (*env != NULL)
+    {   ++len;
+        ++env;
     }
+
+    return len;
 }
-
-//create a copy of envp including the void ptr at the end. all strings in lower case.
-char ** CreateEnvArrInLower(char **src, size_t len) { 
-
-    char ** dest = malloc((len + 1) * sizeof(char**));
-    //check for malloc fail
-
-    size_t i = 0;
-    for (i = 0; i < len; ++i)
-    {
-        dest[i] = malloc(strlen(src[i]) + 1);
-        //check for malloc fail and free past mallocs
-    }
-    dest[i] = NULL;
-    _CopyEnvToLower(dest, src, len);
-    return dest;
-} 
 
 void PrintArrays(char** src, char **copy, size_t len) {
     printf("\n\n");
@@ -58,7 +35,7 @@ void PrintArrays(char** src, char **copy, size_t len) {
 }
 
 void DestroyEnvArr(char **arr, size_t len) {
-    for (size_t i = 0; i <= len; ++i)
+    for (size_t i = 0; i < len; ++i)
     {
         free(arr[i]);
     }
@@ -66,10 +43,36 @@ void DestroyEnvArr(char **arr, size_t len) {
     arr = NULL;
 }
 
+//create a copy of envp including the void ptr at the end. all strings in lower case.
+char ** CreateEnvArrInLower(char **src, size_t len) { 
+
+    char ** dest = malloc((len + 1) * sizeof(char**));
+    if (dest == NULL) {
+        return NULL;
+    }
+
+    size_t i = 0;
+    for (i = 0; i < len; ++i)
+    {
+        dest[i] = malloc(strlen(src[i]) + 1);
+        if (dest[i] == NULL)
+        {
+            DestroyEnvArr(dest, i);
+            return NULL;
+        }
+        _CopyStrToLower(dest[i], src[i]);
+    }
+    dest[i] = NULL;
+
+    return dest;
+} 
 
 int main(int argc, char** argv, char** envp) {
     size_t envp_len = EnvLen(envp);
     char **copy = CreateEnvArrInLower(envp, envp_len);
+    if (copy == NULL) {
+        return -1;
+    }
     PrintArrays(envp, copy, envp_len);
     DestroyEnvArr(copy, envp_len);
     return 0;
